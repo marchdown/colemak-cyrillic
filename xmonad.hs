@@ -11,6 +11,8 @@ import XMonad
 import Data.Monoid
 import System.Exit
 
+import XMonad.Hooks.DynamicLog
+
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -22,10 +24,9 @@ myTerminal      = "urxvt"
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
-
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 2
+myBorderWidth   = 1
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -261,7 +262,26 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad defaults
+
+-- The main function.
+main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
+
+-- Command to launch the bar.
+myBar = "xmobar"
+
+-- Custom PP, configure it as you like. It determines what's being written to the bar.
+myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">" }
+
+-- Keybinding to toggle the gap for the bar.
+toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+
+-- Main configuration, override the defaults to your liking.
+
+-- main = xmonad myConfig
+--     dzenconf <- dzen defaultConfig
+--     xmonad $ dzenconf defaults
+--     dzen2 <- spawnPipe "dzen2 -p -ta l -x 500 -fn '-*-*-*-*-*-*-*-*-*-*-*-*-*'"
+--     xmonad defaults
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -269,7 +289,7 @@ main = xmonad defaults
 --
 -- No need to modify this.
 --
-defaults = defaultConfig {
+myConfig = defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
