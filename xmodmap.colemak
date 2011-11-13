@@ -68,6 +68,8 @@ clear Mod1
 clear Mod4
 !clear Mod5
 
+keycode 108 = Alt_R
+
 !add    Shift   = Shift_L Shift_R
 add    Control = Control_L Control_R
 add    Mod1    =  Meta_L
@@ -125,7 +127,6 @@ keycode  64 =  Meta_L
 !keycode 106 = Insert
 !keycode 107 = Delete
 !keycode 108 = KP_Enter
-keycode 108 = Alt_R
 !keycode 109 = Control_R
 !keycode 110 = Pause Break
 !keycode 111 = Print Sys_Req
